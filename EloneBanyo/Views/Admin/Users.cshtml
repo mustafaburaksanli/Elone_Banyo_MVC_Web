@@ -1,0 +1,107 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<User>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<h3 class="mb-0">KULLANICI İŞLEMLERİ</h3>
+<br />
+<a href="@Url.Action("AddUser", "Admin")" class="btn btn-success">
+    Yeni Kullanıcı Ekle
+</a>
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>E-Posta</th>
+            <th>Güncelleme</th>
+            <th>Silme</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserID</td>
+                <td>@item.UserName</td>
+                <td>@item.UserSurname</td>
+                <td>@item.UserEmail</td>
+                <td>
+                    <form action="@Url.Action("UpdateUser", "Admin")" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.UserID" />
+                        <button type="submit" class="btn btn-warning">Güncelle</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="@Url.Action("UsersDelete", "Admin")" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.UserID" />
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination pagination-sm m-0 float-end">
+    @if (Model.HasPreviousPage) // İlk sayfa ve önceki sayfa butonları
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Users", new { page = 1 })">İlk</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Users", new { page = Model.PageNumber - 1 })">«</a>
+        </li>
+    }
+
+    @if (Model.PageNumber > 3) // Eğer 3. sayfadan büyüksek, önce "..." ve 1. sayfayı göster
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Users", new { page = 1 })">1</a>
+        </li>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+    }
+
+    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++) // Mevcut sayfanın 2 öncesi ve 2 sonrası
+    {
+        if (i > 0 && i <= Model.PageCount)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Users", new { page = i })">@i</a>
+            </li>
+        }
+    }
+
+    @if (Model.PageNumber < Model.PageCount - 2) // Son sayfaya çok uzaktaysak, "..." ve son sayfayı göster
+    {
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Users", new { page = Model.PageCount })">@Model.PageCount</a>
+        </li>
+    }
+
+    @if (Model.HasNextPage) // Sonraki sayfa ve son sayfa butonları
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Users", new { page = Model.PageNumber + 1 })">»</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Users", new { page = Model.PageCount })">Son</a>
+        </li>
+    }
+</ul>

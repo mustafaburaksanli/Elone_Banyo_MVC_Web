@@ -1,0 +1,117 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Product>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<h3 class="mb-0">ÜRÜN İŞLEMLERİ</h3>
+<br />
+<a href="@Url.Action("AddProduct", "Admin")" class="btn btn-success">Ürün Ekle</a>
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Resim</th>
+            <th>Ürün</th>
+            <th>Katalog</th>
+            <th>Açıklama</th>
+            <th>Tarih</th>
+            <th>İlan Durumu</th>
+            <th>Ekleyen Kullanıcı</th>
+            <th>Güncelleme</th>
+            <th>Silme</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@item.ProductID</td>
+                <td><img src="@item.ProductImage" alt="Ürün Resmi" style="width:100px;height:100px;" /></td>
+                <td>@item.ProductName</td>
+                <td>@item.CategorySubtitle.SubtitleName</td>
+                <td>@item.ProductDescription</td>
+                <td>@item.ProductAdditionDate</td>
+                <td>@item.ProductStatus</td>
+                <td>@item.Users.UserEmail</td>
+                <td>
+                    <form action="@Url.Action("UpdateProduct", "Admin")" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.ProductID" />
+                        <button type="submit" class="btn btn-warning">Güncelle</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="@Url.Action("ProductDelete", "Admin")" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@item.ProductID" />
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<ul class="pagination pagination-sm m-0 float-end">
+    @if (Model.HasPreviousPage) // İlk sayfa ve önceki sayfa butonları
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Product", new { page = 1 })">İlk</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Product", new { page = Model.PageNumber - 1 })">«</a>
+        </li>
+    }
+
+    @if (Model.PageNumber > 3) // Eğer 3. sayfadan büyüksek, önce "..." ve 1. sayfayı göster
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Product", new { page = 1 })">1</a>
+        </li>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+    }
+
+    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++) // Mevcut sayfanın 2 öncesi ve 2 sonrası
+    {
+        if (i > 0 && i <= Model.PageCount)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Product", new { page = i })">@i</a>
+            </li>
+        }
+    }
+
+    @if (Model.PageNumber < Model.PageCount - 2) // Son sayfaya çok uzaktaysak, "..." ve son sayfayı göster
+    {
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Product", new { page = Model.PageCount })">@Model.PageCount</a>
+        </li>
+    }
+
+    @if (Model.HasNextPage) // Sonraki sayfa ve son sayfa butonları
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Product", new { page = Model.PageNumber + 1 })">»</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Product", new { page = Model.PageCount })">Son</a>
+        </li>
+    }
+</ul>
+

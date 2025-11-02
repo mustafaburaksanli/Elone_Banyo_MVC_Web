@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Contact>
+<h3 class="mb-0">Okunmamış Teklifler</h3>
+<br/>
+<a href="@Url.Action("ReadOffer", "Admin")" class="btn btn-dark">Okunmuş Tekliflere Git</a>
+<hr/>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>E-Posta</th>
+            <th>Telefon</th>
+            <th>Tarih</th>
+            <th>Okuma</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.ContactID</td>
+                    <td>@item.Name</td>
+                    <td>@item.Surname</td>
+                    <td>@item.Email</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Date</td>
+                    <td>
+                        <form action="@Url.Action("Read", "Admin")" method="post" style="display:inline;">
+                            <input type="hidden" name="ContactID" value="@item.ContactID" />
+                            <button type="submit" class="btn btn-primary">Oku</button>
+                        </form>
+                    </td>
+                </tr>
+
+        }
+    </tbody>
+</table>
+<ul class="pagination pagination-sm m-0 float-end">
+    @if (Model.HasPreviousPage) // İlk sayfa ve önceki sayfa butonları
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Offer", new { page = 1 })">İlk</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Offer", new { page = Model.PageNumber - 1 })">«</a>
+        </li>
+    }
+
+    @if (Model.PageNumber > 3) // Eğer 3. sayfadan büyüksek, önce "..." ve 1. sayfayı göster
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Offer", new { page = 1 })">1</a>
+        </li>
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+    }
+
+    @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++) // Mevcut sayfanın 2 öncesi ve 2 sonrası
+    {
+        if (i > 0 && i <= Model.PageCount)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Offer", new { page = i })">@i</a>
+            </li>
+        }
+    }
+
+    @if (Model.PageNumber < Model.PageCount - 2) // Son sayfaya çok uzaktaysak, "..." ve son sayfayı göster
+    {
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Offer", new { page = Model.PageCount })">@Model.PageCount</a>
+        </li>
+    }
+
+    @if (Model.HasNextPage) // Sonraki sayfa ve son sayfa butonları
+    {
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Offer", new { page = Model.PageNumber + 1 })">»</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Offer", new { page = Model.PageCount })">Son</a>
+        </li>
+    }
+</ul>

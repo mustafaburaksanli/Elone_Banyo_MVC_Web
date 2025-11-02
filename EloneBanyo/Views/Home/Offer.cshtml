@@ -1,0 +1,78 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="inner-banner py-5">
+    <section class="w3l-breadcrumb text-left py-sm-5 ">
+        <div class="container">
+            <div class="w3breadcrumb-gids">
+                <div class="w3breadcrumb-left text-left">
+                    <h2 class="inner-w3-title mt-sm-5 mt-4">
+                        Teklif Gönderin
+                    </h2>
+                </div>
+                <div class="w3breadcrumb-right">
+                    <ul class="breadcrumbs-custom-path">
+                        <li><a href="Index">Ana Sayfa</a></li>
+                        <li class="active"><span class="fas fa-angle-double-right mx-2"></span>Teklif Gönder</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="w3l-contact-10 py-5" id="contact">
+    <div class="form-41-mian pt-lg-4 pt-md-3 pb-lg-4">
+        <div class="container">
+            <div class="heading text-center mx-auto">
+                <h3 class="title-w3l">Bizimle İletişime <span class="inn-text">Geçin</span></h3>
+            </div>
+
+            <div class="contacts-5-grid-main mt-5">
+                <div class="contacts-5-grid">
+                    <div class="map-content-5">
+                        <div class="d-grid grid-col-2 justify-content-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inner-cont mt-5">
+                <form method="post" action="@Url.Action("Offer", "Home")" class="signin-form">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+                    <div class="form-grids">
+                        <div class="form-input">
+                            <input type="text" name="Name" id="w3lName" placeholder="Adınız *" required="" />
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="Surname" id="w3lSubject" placeholder="Soyadınız" required />
+                        </div>
+                        <div class="form-input">
+                            <input type="email" name="Email" id="w3lSender" placeholder="E-Posta Adresiniz *" required />
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="Phone" id="w3lPhone" placeholder="Telefon Numaranız *" required />
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <textarea name="Message" id="w3lMessage" placeholder="Teklif Mesajınız" required=""></textarea>
+                    </div>
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    <div class="g-recaptcha" data-sitekey="6Ld2rUwqAAAAAFNCj_brJBm0ijiSH8U_Ge3M2RG2"></div>
+                    <div class="w3-submit text-right">
+                        <button class="btn btn-style btn-primary">Teklifi Gönder <i class="fas fa-paper-plane ms-2"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

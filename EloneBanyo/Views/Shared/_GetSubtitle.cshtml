@@ -1,0 +1,9 @@
+﻿@model IEnumerable<EntityLayer.Concrete.CategorySubtitle>
+
+@foreach (var item in Model)
+{
+    if(item.SubtitleStatus==true)
+                {
+    <option value="@item.SubtitleID">@item.SubtitleName</option>
+                }
+}

@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using EntityLayer.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Product>
+<main>
+    <div class="inner-banner py-5">
+        <section class="w3l-breadcrumb text-left py-sm-5 ">
+            <div class="container">
+                <div class="w3breadcrumb-gids">
+                    <div class="w3breadcrumb-left text-left">
+                        <h2 class="inner-w3-title mt-sm-5 mt-4">
+                            Ürünlerimiz
+                        </h2>
+                    </div>
+                    <div class="w3breadcrumb-right">
+                        <ul class="breadcrumbs-custom-path">
+                            <li><a href="~/Home/Index">Ana Sayfa</a></li>
+                            <li class="active"><span class="fas fa-angle-double-right mx-2"></span>Ürünlerimiz</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <section class="locations-1" id="locations">
+        <div class="w3l-contact-10 py-5" id="contact">
+            <div class="form-41-mian pt-lg-4 pt-md-3 pb-lg-4">
+                <div class="container">
+                    <div class="contacts-5-grid-main mt-5">
+                        <div class="contacts-5-grid">
+                            <div class="map-content-5">
+                                <div class="d-grid grid-col-2 justify-content-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-md-5 pt-4">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-4 col-md-6 mt-4 pt-md-2">
+                                <div class="w3property-grid">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-@item.ProductID">
+                                        <div class="box16">
+                                            <img class="img-fluid" src="@item.ProductImage" alt="">
+                                            <div class="box-content">
+                                                <h3 class="title">@item.ProductName</h3>
+                                                <span class="post">@item.ProductDescription</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-@item.ProductID" tabindex="-1" aria-labelledby="modalLabel-@item.ProductID" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabel-@item.ProductID" style="color:black;">@item.ProductName</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <a href="@item.ProductImage" target="_blank">
+                                                <img src="@item.ProductImage" class="img-fluid" alt="Product Image">
+                                            </a>
+                                            <hr />
+                                            <p style="color:black;">@item.ProductDescription</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="d-flex justify-content-center">
+        <!-- Flexbox ile ortalama -->
+        <ul class="pagination pagination-sm m-0">
+            @if (Model.HasPreviousPage) // İlk sayfa ve önceki sayfa butonları
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Product", new { page = 1 })">İlk</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Product", new { page = Model.PageNumber - 1 })">«</a>
+                </li>
+            }
+
+            @if (Model.PageNumber > 3) // Eğer 3. sayfadan büyüksek, önce "..." ve 1. sayfayı göster
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Product", new { page = 1 })">1</a>
+                </li>
+                <li class="page-item disabled"><a class="page-link">...</a></li>
+            }
+
+            @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++) // Mevcut sayfanın 2 öncesi ve 2 sonrası
+            {
+                if (i > 0 && i <= Model.PageCount)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Product", new { page = i })">@i</a>
+                    </li>
+                }
+            }
+
+            @if (Model.PageNumber < Model.PageCount - 2) // Son sayfaya çok uzaktaysak, "..." ve son sayfayı göster
+            {
+                <li class="page-item disabled"><a class="page-link">...</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Product", new { page = Model.PageCount })">@Model.PageCount</a>
+                </li>
+            }
+
+            @if (Model.HasNextPage) // Sonraki sayfa ve son sayfa butonları
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Product", new { page = Model.PageNumber + 1 })">»</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Product", new { page = Model.PageCount })">Son</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+</main>

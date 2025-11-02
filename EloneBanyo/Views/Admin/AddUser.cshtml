@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <form id="userForm"action="@Url.Action("AddUser", "Admin")" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="exampleInput1" name="UserName" placeholder="Ad">
+            </div>
+            <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="exampleInput2" name="UserSurname" placeholder="Soyad">
+            </div>
+            <div class="col-md-6 mb-3">
+                <input type="email" class="form-control" id="exampleInput3" name="UserEmail" placeholder="E-Posta">
+            </div>
+            <div class="col-md-6 mb-3 position-relative">
+                <input type="password" class="form-control" id="password" name="UserPassword" placeholder="Şifre">
+            </div>
+            <div class="col-md-6 mb-3 position-relative">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Şifre Tekrar">
+            </div>
+            <div class="col-md-6 mb-3">
+                <button type="button" class="btn btn-success" onclick="validateForm()">Kullanıcı Ekle</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    function validateForm() {
+        var userName = document.getElementById("exampleInput1").value;
+        var userSurname = document.getElementById("exampleInput2").value;
+        var userEmail = document.getElementById("exampleInput3").value;
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (userName === "" || userSurname === "" || userEmail === "" || password === "" || confirmPassword === "") {
+            alert("Tüm alanlar doldurulmalıdır.");
+            return false;
+        }
+
+        if (password.length < 8 || password.length > 16) {
+            alert("Şifre 8-16 karakter arasında olmalıdır.");
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Şifreler eşleşmiyor. Lütfen tekrar deneyin.");
+            return false;
+        }
+
+        document.getElementById("userForm").submit();
+    }
+</script>

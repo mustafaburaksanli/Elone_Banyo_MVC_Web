@@ -1,0 +1,197 @@
+﻿﻿@using EntityLayer.Concrete
+@model PagedList.IPagedList<EntityLayer.Concrete.Product>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title Elone Plastik</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/assets/css/style-starter.css">
+    <link rel="stylesheet" href="~/assets/css/stil.css">
+    <link href="~/assets/images/eloneicon.png" rel="shortcut icon" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <header id="site-header" class="fixed-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light stroke py-lg-0">
+                <a href="~/Home/Index">
+                    <img src="~/assets/images/Adsız tasarım-Photoroom.png" width="210" height="80" style="margin-top: 10px;" alt="Web Sitesi Logosu" />
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                    <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav mx-lg-auto my-2 my-lg-0 navbar-nav-scroll">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="~/Home/Index">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#Pages" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Ürünlerimiz <span class="fa fa-angle-down ms-1"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @Html.Action("GetCategories", "Home")
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Home/Offer">Teklif Gönderme</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Home/Contact">İletişim</a>
+                        </li>
+                    </ul>
+                    <div class="overlay overlay-slidedown">
+                        <button type="button" class="overlay-close"><i class="fas fa-times"></i></button>
+                        <nav class="w3l-formhny">
+                            <h5 class="mb-3">Search here</h5>
+                            <form action="#" method="GET" class="d-sm-flex search-header">
+                                <input class="form-control me-2" type="search" placeholder="Search here..." aria-label="Search" required>
+                                <button class="btn btn-style btn-primary" type="submit">Search</button>
+                            </form>
+                        </nav>
+                    </div>
+                </div>
+                <div class="mobile-position">
+                    <nav class="navigation">
+                        <div class="theme-switch-wrapper">
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox">
+                                <div class="mode-container">
+                                    <i class="gg-sun"></i>
+                                    <i class="gg-moon"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </nav>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+    <!--//w3l-blog-->
+    <!--/footer-9-->
+    <!-- Js scripts -->
+    <!-- move top -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a href="https://wa.me/903129116097" class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+    <script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("movetop").style.display = "block";
+            } else {
+                document.getElementById("movetop").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    <!-- //move top -->
+    <!--//footer-9 -->
+    <!-- Template JavaScript -->
+    <script src="~/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="~/assets/js/theme-change.js"></script>
+    <!--/search-->
+    <script src="~/assets/js/modernizr.custom.js"></script>
+    <script src="~/assets/js/classie.js"></script>
+    <script src="~/assets/js/demo1.js"></script>
+    <!--//search-->
+    <!-- MENU-JS -->
+    <script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+    </script>
+    <!-- //MENU-JS -->
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dropdown başlıklarını seç
+            const headers = document.querySelectorAll('.dropdown-header');
+
+            // Her başlığa tıklama olayı ekle
+            headers.forEach(header => {
+                header.addEventListener('click', (event) => {
+
+                    // Tıklanan başlığın hedefini al
+                    const targetId = event.target.getAttribute('data-target');
+                    const targetSubMenu = document.getElementById(`sub-menu-${targetId}`);
+
+                    // Eğer zaten açıksa, kapat
+                    if (targetSubMenu.style.display === 'block') {
+                        targetSubMenu.style.display = 'none';
+                    } else {
+                        // Tüm alt menüleri gizle
+                        document.querySelectorAll('.sub-menu').forEach(menu => menu.style.display = 'none');
+
+                        // Tıklanan başlığın alt menüsünü göster
+                        if (targetSubMenu) {
+                            targetSubMenu.style.display = 'block';
+                        }
+                    }
+                });
+            });
+
+            // Menü dışında bir yere tıklanırsa tüm alt menüleri gizle
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.sub-menu').forEach(menu => menu.style.display = 'none');
+            });
+
+            // Menüye tıklanma olayını içeren bir kontrol ekleyin
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                });
+            });
+        });
+
+
+    </script>
+    <!-- //disable body scroll which navbar is in active -->
+    <!-- //bootstrap -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+</body>
+</html>

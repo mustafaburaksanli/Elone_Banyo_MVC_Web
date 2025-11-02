@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model EntityLayer.Concrete.Category
+
+<div class="container mt-5">
+    <form action="@Url.Action("UpdateCategoryPost", "Admin")" method="post">
+        <div class="mb-3">
+            <label for="CategoryName">Kategori Adı</label>
+            <input type="text" class="form-control" id="CategoryName" name="CategoryName" value="@Model.CategoryName" required>
+        </div>
+
+        <input type="hidden" name="CategoryID" value="@Model.CategoryID" />
+
+        <button type="submit" class="btn btn-primary">Kategori Güncelle</button>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var categoryName = document.getElementById("categoryName").value;
+        if (categoryName === "") {
+            alert("Lütfen kategori ismi giriniz.");
+            return false;
+        }
+        return true;
+    }
+</script>
+

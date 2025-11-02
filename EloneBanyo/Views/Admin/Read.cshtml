@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model EntityLayer.Concrete.Contact
+
+<div class="card">
+    <div class="card-header">
+        <h3>İletişim Detayları</h3>
+    </div>
+    <div class="card-body">
+        <p><strong>Ad:</strong> @Model.Name</p>
+        <p><strong>Soyad:</strong> @Model.Surname</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Telefon:</strong> @Model.Phone</p>
+        <p><strong>Mesaj:</strong> @Model.Message</p>
+        <p><strong>Tarih:</strong> @Model.Date.ToString("dd/MM/yyyy")</p>
+        <p><strong>Durum:</strong> @(Model.Status ? "Okundu" : "Okunmadı")</p>
+
+        @if (!Model.Status)
+        {
+            <form action="@Url.Action("Approval", "Admin")" method="post" style="display:inline;">
+                <input type="hidden" name="ContactID" value="@Model.ContactID" />
+                <button type="submit" class="btn btn-primary">Okundu Olarak İşaretle</button>
+            </form>
+        }
+    </div>
+</div>

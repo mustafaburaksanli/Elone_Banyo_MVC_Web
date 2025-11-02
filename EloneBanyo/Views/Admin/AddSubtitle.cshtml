@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <form id="subtitleForm" action="@Url.Action("AddSubtitle", "Admin")" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <input type="text" name="SubtitleName" class="form-control" id="exampleInput1" placeholder="Ad">
+            </div>
+            <div class="col-md-6 mb-3">
+                <select class="form-control" id="exampleSelect" name="CategoryID">
+                    <option value="">Hangi Kategoriye Ait Olduğunu Seçin</option>
+                    @Html.Action("GetCategories", "Admin")
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button type="submit" class="btn btn-success">Alt Başlık Ekle</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function validateForm() {
+        var categoryName = document.getElementById("categoryName").value;
+        if (categoryName === "") {
+            alert("Lütfen kategori ismi giriniz.");
+            return false;
+        }
+        return true;
+    }
+</script>

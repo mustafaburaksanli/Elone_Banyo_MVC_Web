@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model EntityLayer.Concrete.Product
+
+<div class="container mt-5">
+    <form id="productForm" action="@Url.Action("UpdateProductPost", "Admin")" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="productImage">Ürün Resmi</label>
+                <input type="file" class="form-control" id="productImage" name="ProductImage" onchange="updateFileName()">
+                <small id="fileName" class="form-text text-muted">
+                    @if (!string.IsNullOrEmpty(Model.ProductImage))
+                    {
+                        <text>Mevcut Dosya: @System.IO.Path.GetFileName(Model.ProductImage)</text>
+                    }
+                    else
+                    {
+                        <text>Dosya seçilmedi</text>
+                    }
+                </small>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="Name">Ürün Adı</label>
+                <input type="text" class="form-control" id="Name" name="ProductName" value="@Model.ProductName">
+            </div>
+            <input type="hidden" name="ProductID" value="@Model.ProductID" /> <!-- Hidden input for ProductID -->
+            <div class="col-md-6 mb-3">
+                <label for="Description">Ürün Açıklaması</label>
+                <input type="text" class="form-control" id="Description" name="ProductDescription" value="@Model.ProductDescription">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="exampleSelect">Kategori</label>
+                <select class="form-control" id="exampleSelect" name="SubtitleID">
+                    <option value="">Hangi Kategoriye Ait Olduğunu Seçin</option>
+                    @Html.Action("GetSubtitle", "Admin")
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button type="submit" class="btn btn-success">Ürün Güncelle</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var productName = document.getElementById("Name").value.trim();
+        var productDescription = document.getElementById("Description").value.trim();
+        var subtitleID = document.getElementById("exampleSelect").value;
+
+        if (productName === "") {
+            alert("Lütfen ürün adı girin.");
+            return false;
+        }
+
+        if (productDescription === "") {
+            alert("Lütfen ürün açıklaması girin.");
+            return false;
+        }
+
+        if (subtitleID === "") {
+            alert("Lütfen hangi kategoriye ait olduğunu seçin.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function updateFileName() {
+        var input = document.getElementById('productImage');
+        var fileNameLabel = document.getElementById('fileName');
+
+        if (input.files && input.files.length > 0) {
+            fileNameLabel.innerHTML = "Seçilen Dosya: " + input.files[0].name;
+        } else {
+            fileNameLabel.innerHTML = "Dosya seçilmedi"; 
+        }
+    }
+</script>

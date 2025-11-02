@@ -1,0 +1,14 @@
+﻿@model IEnumerable<EntityLayer.Concrete.CategorySubtitle>
+
+@foreach (var item in Model)
+{
+    if (item.SubtitleStatus == true)
+    {
+        <a href="@Url.Action("Product", new { id = item.SubtitleID })" class="dropdown-header" role="button" aria-expanded="false">
+            @item.SubtitleName
+        </a>
+    }
+
+
+}
+

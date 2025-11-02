@@ -1,0 +1,47 @@
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#25d366;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  font-size:30px;
+	box-shadow: 2px 2px 3px #999;
+  z-index:100;
+}
+
+.my-float{
+	margin-top:16px;
+}
+/* Açýk mod için turuncu renk temasý */
+.pagination .page-link {
+	color: #ff9800; /* Turuncu metin rengi */
+	border-color: #ff9800; /* Turuncu sýnýr rengi */
+}
+
+.pagination .page-item.active .page-link {
+	background-color: #ff9800; /* Turuncu arka plan rengi */
+	border-color: #ff9800; /* Turuncu sýnýr rengi */
+	color: white; /* Aktif sayfa için beyaz metin */
+}
+
+/* Gece modu için (dark mode) */
+@media (prefers-color-scheme: dark) {
+	.pagination .page-link {
+		color: #ff9800; /* Gece modunda da turuncu metin rengi */
+		border-color: #ff9800; /* Gece modunda turuncu sýnýr rengi */
+	}
+
+	.pagination .page-item.active .page-link {
+		background-color: #ff9800; /* Gece modunda aktif sayfa turuncu */
+		border-color: #ff9800;
+		color: black; /* Aktif sayfa için siyah metin */
+	}
+
+	.pagination .page-item.disabled .page-link {
+		color: #777; /* Gece modunda disabled butonlar için gri renk */
+	}
+}

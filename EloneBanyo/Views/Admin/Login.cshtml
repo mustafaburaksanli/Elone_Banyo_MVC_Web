@@ -1,0 +1,58 @@
+﻿<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Elone Admin Panel</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Style -->
+    <link rel="stylesheet" href="~/assets/css/style.css" type="text/css" media="all" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+    <!-- login form -->
+    <section class="w3l-login">
+        <div class="overlay">
+            <div class="wrapper">
+                <div class="form-section">
+                    <h3>Elone Admin Panel</h3>
+                    <h6>Giriş Yapın</h6>
+                    <form action="@Url.Action("Login", "Admin")" method="post" enctype="multipart/form-data" class="signin-form">
+                        <div class="form-input">
+                            <input type="text" name="UserEmail" placeholder="Username" required="" autofocus>
+                        </div>
+                        <div class="form-input">
+                            <input type="password" name="UserPassword" placeholder="Password" required="">
+                        </div>
+                        <div class="g-recaptcha" data-sitekey="6LfCy08qAAAAAIuMHGh4_B9lpeoqIQ7SL7Fsl978"></div>
+                        <button type="submit" class="btn btn-primary theme-button mt-4">Log in</button>
+                    </form>
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger" style="margin-top:10px;">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div id='stars'></div>
+        <div id='stars2'></div>
+        <div id='stars3'></div>
+
+        <!-- copyright -->
+        <!-- //copyright -->
+    </section>
+
+    <!-- /login form -->
+</body>
+
+</html>

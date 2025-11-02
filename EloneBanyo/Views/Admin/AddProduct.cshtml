@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+﻿@using EntityLayer.Concrete
+@model List<CategorySubtitle>
+
+<div class="container mt-5">
+    <form id="productForm" action="@Url.Action("AddProduct", "Admin")" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <input type="file"
+                       class="form-control" id="productImage" name="ProductImage" placeholder="Ürün Resmi">
+            </div>
+            <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="Name" name="ProductName" placeholder="Ürün Adı">
+            </div>
+            <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="Description" name="ProductDescription" placeholder="Açıklama">
+            </div>
+            <div class="col-md-6 mb-3">
+                <select class="form-control" id="exampleSelect" name="SubtitleID">
+                    <option value="">Hangi Kategoriye Ait Olduğunu Seçin</option>
+                    @Html.Action("GetSubtitle", "Admin")
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button type="submit" class="btn btn-success">Ürün Ekle</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var productImage = document.getElementById("productImage").value;
+        var productName = document.getElementById("Name").value;
+        var productDescription = document.getElementById("Description").value;
+        var subtitleID = document.getElementById("exampleSelect").value;
+
+        if (productImage === "") {
+            alert("Lütfen bir ürün resmi seçin.");
+            return false;
+        }
+
+        if (productName === "") {
+            alert("Lütfen ürün adı girin.");
+            return false;
+        }
+
+        if (productDescription === "") {
+            alert("Lütfen ürün açıklaması girin.");
+            return false;
+        }
+
+        if (subtitleID === "") {
+            alert("Lütfen hangi kategoriye ait olduğunu seçin.");
+            return false;
+        }
+
+        return true;
+    }
+</script>

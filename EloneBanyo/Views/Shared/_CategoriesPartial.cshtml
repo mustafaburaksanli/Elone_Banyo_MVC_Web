@@ -1,0 +1,18 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Category>
+
+@foreach (var item in Model)
+{
+    if(item.CategoryStatus==true)
+                {            
+    <li class="nav-item dropdown">
+        <a href="#"  data-target="@item.CategoryID" class="dropdown-header" role="button" aria-expanded="false">
+            <i class="fas fa-angle-right"></i>@item.CategoryName
+        </a>
+        <ul class="sub-menu" id="sub-menu-@item.CategoryID" style = "display: none;" >
+
+            @Html.Action("GetSubCategories", "Home", new { id = item.CategoryID })
+        </ul>
+</li>
+    <li><hr class="dropdown-divider"></li>  
+    }
+}

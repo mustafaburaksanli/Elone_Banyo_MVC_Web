@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model EntityLayer.Concrete.User
+<div class="container mt-5">
+    <form id="userForm" action="@Url.Action("UpdateUserPost", "Admin")" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="UserID" value="@Model.UserID" /> <!-- UserID gizli alanı -->
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="UserName">Ad</label>
+                <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" placeholder="Kullanıcı Adı">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="UserSurname">Soyad</label>
+                <input type="text" class="form-control" id="UserSurname" name="UserSurname" value="@Model.UserSurname" placeholder="Kullanıcı Soyadı">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="UserEmail">E-posta</label>
+                <input type="email" class="form-control" id="UserEmail" name="UserEmail" value="@Model.UserEmail" placeholder="Kullanıcı E-posta">
+            </div>
+            <div class="col-md-6 mb-3 position-relative">
+                <label for="UserPassword">Yeni Şifre</label>
+                <input type="password" class="form-control" id="password" name="UserPassword" placeholder="Yeni Şifre (Boş bırakılabilir)">
+            </div>
+            <div class="col-md-6 mb-3 position-relative">
+                <label for="UserPassword">Yeni Şifre Onay</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Şifreyi Onaylayın">
+            </div>
+            <div class="col-md-6 mb-3">
+                <br/>
+                <button type="button" class="btn btn-success" onclick="validateForm()">Kullanıcı Güncelle</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var userName = document.getElementById("UserName").value;
+        var userSurname = document.getElementById("UserSurname").value;
+        var userEmail = document.getElementById("UserEmail").value;
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (userName === "" || userSurname === "" || userEmail === "") {
+            alert("Kullanıcı adı, soyadı ve e-posta doldurulmalıdır.");
+            return false;
+        }
+
+        if (password !== "" && (password.length < 8 || password.length > 16)) {
+            alert("Şifre 8-16 karakter arasında olmalıdır.");
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Şifreler eşleşmiyor. Lütfen tekrar deneyin.");
+            return false;
+        }
+
+        document.getElementById("userForm").submit();
+    }
+</script>

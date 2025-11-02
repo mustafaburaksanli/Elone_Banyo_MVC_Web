@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model EntityLayer.Concrete.CategorySubtitle
+<div class="container mt-5">
+    <form id="subtitleForm" action="@Url.Action("UpdateSubtitlePost", "Admin")" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="SubtitleName">Alt Kategori Adı</label>
+                <input type="text" name="SubtitleName" class="form-control" id="SubtitleName" placeholder="@Model.SubtitleName">
+            </div>
+            <input type="hidden" name="SubtitleID" value="@Model.SubtitleID" />
+            <div class="col-md-6 mb-3">
+                <label for="Category">Kategori</label>
+                <select class="form-control" id="CategoryID" name="CategoryID">
+                    @Html.Action("GetCategories", "Admin")
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button type="submit" class="btn btn-success">Alt Başlık Güncelle</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function validateForm() {
+     
+        var subtitleName = document.getElementById("SubtitleName").value.trim();
+        if (subtitleName === "") {
+            alert("Alt Başlık ismi boş bırakılamaz.");
+            return false;
+        }
+
+        var categoryID = document.getElementById("CategoryID").value;
+        if (categoryID === "" || categoryID === "0") {
+            alert("Lütfen bir kategori seçiniz.");
+            return false;
+        }
+
+        return true;
+    }
+</script>

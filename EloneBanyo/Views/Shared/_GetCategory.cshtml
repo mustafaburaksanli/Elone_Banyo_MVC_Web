@@ -1,0 +1,10 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Category>
+
+@foreach (var item in Model)
+{
+    if (item.CategoryStatus == true)
+    {
+        <option value="@item.CategoryID">@item.CategoryName</option>
+    }
+
+}
